@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants.DriveConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveSubsystem extends SubsystemBase {
+public class DriveSubsystem extends SubsystemBase implements Loggable  {
   // The motors on the left side of the drive.
   private final MotorControllerGroup m_leftMotors =
       new MotorControllerGroup(
@@ -30,9 +32,11 @@ public class DriveSubsystem extends SubsystemBase {
           new PWMSparkMax(DriveConstants.kRightMotor2Port));
 
   // The robot's drive
+  @Log.DifferentialDrive
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
   // The left-side drive encoder
+  @Log.Encoder
   private final Encoder m_leftEncoder =
       new Encoder(
           DriveConstants.kLeftEncoderPorts[0],
@@ -40,6 +44,7 @@ public class DriveSubsystem extends SubsystemBase {
           DriveConstants.kLeftEncoderReversed);
 
   // The right-side drive encoder
+  @Log.Encoder()
   private final Encoder m_rightEncoder =
       new Encoder(
           DriveConstants.kRightEncoderPorts[0],
@@ -47,6 +52,7 @@ public class DriveSubsystem extends SubsystemBase {
           DriveConstants.kRightEncoderReversed);
 
   // The gyro sensor
+  @Log.Gyro
   private final Gyro m_gyro = new ADXRS450_Gyro();
 
   // Odometry class for tracking robot pose
