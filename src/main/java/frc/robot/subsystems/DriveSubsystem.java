@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -14,26 +17,19 @@ import frc.robot.Constants.DriveConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase implements Loggable  {
   // The motors on the left side of the drive.
-  private final MotorControllerGroup m_leftMotors =
-      new MotorControllerGroup(
-          new PWMSparkMax(DriveConstants.kLeftMotor1Port),
-          new PWMSparkMax(DriveConstants.kLeftMotor2Port));
+  private final WPI_TalonFX m_LeftMotor = new WPI_TalonFX(DriveConstants.kLeftMotor1Port);
+  private final WPI_TalonFX m_LeftFollowerMotor = new WPI_TalonFX(DriveConstants.kLeftMotor2Port);
+  private final WPI_TalonFX m_RightMotor = new WPI_TalonFX(DriveConstants.kRightMotor1Port);
+  private final WPI_TalonFX m_RightFollowerMotor = new WPI_TalonFX(DriveConstants.kRightMotor2Port);
 
-  // The motors on the right side of the drive.
-  private final MotorControllerGroup m_rightMotors =
-      new MotorControllerGroup(
-          new PWMSparkMax(DriveConstants.kRightMotor1Port),
-          new PWMSparkMax(DriveConstants.kRightMotor2Port));
 
   // The robot's drive
   @Log.DifferentialDrive
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_LeftMotor, m_RightMotor);
 
   // The left-side drive encoder
   @Log.Encoder
@@ -58,12 +54,21 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
 
-  /** Creates a new DriveSubsystem. */
+  /** Creates a new DriveSubsystem. 
+   * @param InvertType */
   public DriveSubsystem() {
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
-    m_rightMotors.setInverted(true);
+    m_RightMotor.configFactoryDefault();
+    m_RightFollowerMotor.configFactoryDefault();
+    m_LeftMotor.configFactoryDefault();
+    m_LeftFollowerMotor.configFactoryDefault();
+    
+    m_LeftFollowerMotor.follow(m_LeftMotor);
+    m_RightFollowerMotor.follow(m_RightMotor);
+
+    m_RightMotor.setInverted(TalonFXInvertType.Clockwise);
+    m_RightFollowerMotor.setInverted(TalonFXInvertType.FollowMaster);
+    m_LeftMotor.setInverted(TalonFXInvertType.CounterClockwise);
+    m_LeftFollowerMotor.setInverted(TalonFXInvertType.FollowMaster);
 
     // Sets the distance per pulse for the encoders
     m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
@@ -125,8 +130,8 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_leftMotors.setVoltage(leftVolts);
-    m_rightMotors.setVoltage(rightVolts);
+    m_LeftMotor.setVoltage(leftVolts);
+    m_RightMotor.setVoltage(rightVolts);
     m_drive.feed();
   }
 
