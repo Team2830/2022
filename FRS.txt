@@ -6,6 +6,8 @@ Climber
 		When button B on the operator joystick is HELD, move the climber down untill it its hits its bottem position
 	Preset Boundaries Up:
 		When button A on the operator joystick is HELD, move the climber up until it hits its top position
+	Reset:
+		When back button on the operator joystick is HELD, move the climber in reverse to reset it
 Intake
 	Down intake:
 		When Button X on operator joystick is PRESSED, move piston intake down then turn on rolllers on intake
