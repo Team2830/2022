@@ -41,7 +41,7 @@ public class ExampleAutonomous extends SequentialCommandGroup {
           new Pose2d(3, 0, new Rotation2d(0)),
           null, // No interior waypoints
           new Pose2d(6, 0, new Rotation2d(0)),
-          RamseteFactory.getTrajectoryConfig())
+          RamseteFactory.getTrajectoryConfig().setReversed(true))
       )
     );
   }
