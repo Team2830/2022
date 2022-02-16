@@ -1,0 +1,30 @@
+Drivetrain
+	Arcade Drive
+Climber
+	Down
+	Preset Boundaries Down:
+		When button B on the operator joystick is HELD, move the climber down untill it its hits its bottem position
+	Preset Boundaries Up:
+		When button A on the operator joystick is HELD, move the climber up until it hits its top position
+	Reset:
+		When back button on the operator joystick is HELD, move the climber in reverse to reset it
+Intake
+	Down intake:
+		When Button X on operator joystick is PRESSED, move piston intake down then turn on rolllers on intake
+	STORAGE up:
+		When button Y on operator joystick is PRESSED, move piston Intake Up then turn off Rollers on intake
+	Intake Roller Reverse:
+		When button  Start on operator joystick is HELD, Rollers turned on in reverse mode
+Shooter
+	Shooter fast:
+		When Left Joystick Button is PRESSED, Rollers turn at max speed
+	Shooters slow:
+		When right Joystick Button is PRESSED, Rollers turn at slow speed
+Conveyor
+	Conveyor Roller up:
+		When button LB on operator joystick is Held, Rollers turned on going up
+	Conveyor Roller down:
+		When button RB on operator joystick is Held, Rollers turned on reversed going down
+
+HELD: The operation only takes place when the button is held and stops when it is released
+PRESSED: The button start when the button is pressed and continues until stopped by another event

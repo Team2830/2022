@@ -51,6 +51,36 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
+  }
+
+  public static final class ClimberConstants {
+    public static final int kLeftClimberMotorId = 5;
+    public static final int kRightClimberMotorId = 6;
+    public static final int kTopClimberMotorPosition = 442368;
+    public static final int kBottomClimberMotorPosition = 800000;
+  }
+
+  public static final class IntakeConstants{
+    public static final int KIntakeRollerId = 8;
+    public static final int kPneumaticUpId = 0;
+    public static final int kPneumaticDownId = 1;
+
+  }
+
+  public static final class Shooter{
+    public static final int kSmallShooterId = 13;
+    public static final int kBigShotterId = 14;
+    public static final int kBigShotterFollowerId = 15;
+
+  }
+
+  public static final class Conveyor{
+    public static final int kConveyorId = 16;
+
+
+
+
   }
 
   public static final class AutoConstants {
