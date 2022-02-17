@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,6 +27,8 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Climber Position", m_LeftClimberMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Climber Position", m_RightClimberMotor.getSelectedSensorPosition());
   }
 
   public void normalMovement() {
@@ -45,6 +48,13 @@ public class Climber extends SubsystemBase {
 
   public double getPosition() {
     return (m_LeftClimberMotor.getSelectedSensorPosition() + m_RightClimberMotor.getSelectedSensorPosition()) / 2;
+  }
+
+  public void resetPosition(){
+    m_LeftClimberMotor.setSelectedSensorPosition(0);
+    m_RightClimberMotor.setSelectedSensorPosition(0);
+
+
   }
   
 }

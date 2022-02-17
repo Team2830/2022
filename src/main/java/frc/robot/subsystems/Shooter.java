@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -35,13 +36,13 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shooterMax(){
-    m_SmallRoller.set(TalonFXControlMode.PercentOutput, 1);
-    m_BigRoller.set(TalonFXControlMode.PercentOutput, 1);
+    m_SmallRoller.set(TalonFXControlMode.PercentOutput, SmartDashboard.getNumber("Small Roller High Goal", 0.7));
+    m_BigRoller.set(TalonFXControlMode.PercentOutput, SmartDashboard.getNumber("Big Roller High Goal", 0.7));
   }
 
   public void shooterSlow(){
-    m_SmallRoller.set(TalonFXControlMode.PercentOutput, .5);
-    m_BigRoller.set(TalonFXControlMode.PercentOutput, .5);
+    m_SmallRoller.set(TalonFXControlMode.PercentOutput, SmartDashboard.getNumber("Big Roller Low Goal", 0.4));
+    m_BigRoller.set(TalonFXControlMode.PercentOutput, SmartDashboard.getNumber("Small Roller High Goal", 0.4));
   }
   public void shooterStop(){
     m_SmallRoller.set(TalonFXControlMode.PercentOutput, 0);
