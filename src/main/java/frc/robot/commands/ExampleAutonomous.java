@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RamseteFactory;
@@ -29,18 +30,18 @@ public class ExampleAutonomous extends SequentialCommandGroup {
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+            List.of(new Translation2d(Units.feetToMeters(3), Units.feetToMeters(3)), new Translation2d(Units.feetToMeters(6), Units.feetToMeters(-3))),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(3, 0, new Rotation2d(0)),
+            new Pose2d(Units.feetToMeters(9), 0, new Rotation2d(0)),
             // Pass config
             RamseteFactory.getTrajectoryConfig())
         ),
         new PrintCommand("Robots are cool!"),
       RamseteFactory.createRamseteCommand(
         TrajectoryGenerator.generateTrajectory(
-          new Pose2d(3, 0, new Rotation2d(0)),
+          new Pose2d(Units.feetToMeters(9), 0, new Rotation2d(0)),
           null, // No interior waypoints
-          new Pose2d(6, 0, new Rotation2d(0)),
+          new Pose2d(Units.feetToMeters(6), 0, new Rotation2d(0)),
           RamseteFactory.getTrajectoryConfig().setReversed(true))
       )
     );
