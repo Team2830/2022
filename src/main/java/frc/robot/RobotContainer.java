@@ -83,8 +83,8 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, XboxController.Button.kA.value)
         .whileHeld(new ClimberUp(m_Climber));
 
-    new JoystickButton(m_operatorController, XboxController.Button.kStart.value)
-        .whenPressed(new ClimberReset(m_Climber));
+    new JoystickButton(m_operatorController, XboxController.Button.kBack.value)
+        .whileHeld(new ClimberReset(m_Climber));
 
     new JoystickButton(m_operatorController, XboxController.Button.kX.value)
         .whenPressed(new IntakeDown(m_Intake));
@@ -101,7 +101,7 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, XboxController.Button.kRightBumper.value)
         .whenPressed(new ShooterSlow(m_Shooter));
     
-    new JoystickButton(m_operatorController, XboxController.Button.kBack.value)
+    new JoystickButton(m_operatorController, XboxController.Button.kStart.value)
         .whenPressed(new ShooterStop(m_Shooter));
     
     new JoystickButton(m_operatorController, XboxController.Button.kLeftStick.value)

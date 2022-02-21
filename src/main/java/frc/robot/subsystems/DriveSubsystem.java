@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -49,7 +50,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
 
   // The gyro sensor
   @Log.Gyro
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  //private final Gyro m_gyro = new ADXRS450_Gyro();
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
@@ -75,14 +76,14 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
     m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
 
     resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    m_odometry = new DifferentialDriveOdometry(/*m_gyro.getRotation2d()*/new Rotation2d(0));
   }
 
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(
-        m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+    //m_odometry.update(
+    //    m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
   }
 
   /**
@@ -110,7 +111,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    */
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    //m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
   /**
@@ -179,7 +180,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    m_gyro.reset();
+    //m_gyro.reset();
   }
 
   /**
@@ -188,7 +189,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return m_gyro.getRotation2d().getDegrees();
+    return 0;//m_gyro.getRotation2d().getDegrees();
   }
 
   /**
@@ -197,6 +198,6 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return -m_gyro.getRate();
+    return 0;//-m_gyro.getRate();
   }
 }

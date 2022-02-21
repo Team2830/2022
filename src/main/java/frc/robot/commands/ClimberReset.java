@@ -23,7 +23,7 @@ public class ClimberReset extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Climber.normalMovement();
+    m_Climber.reverseMovement();
 
   }
 
@@ -31,7 +31,7 @@ public class ClimberReset extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_Climber.stopMovement();
-
+    m_Climber.resetPosition();
   }
 
   // Returns true when the command should end.
