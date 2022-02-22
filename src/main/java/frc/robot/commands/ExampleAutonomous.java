@@ -13,6 +13,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RamseteFactory;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -37,6 +38,7 @@ public class ExampleAutonomous extends SequentialCommandGroup {
             RamseteFactory.getTrajectoryConfig())
         ),
         new PrintCommand("Robots are cool!"),
+        new WaitCommand(2),
       RamseteFactory.createRamseteCommand(
         TrajectoryGenerator.generateTrajectory(
           new Pose2d(Units.feetToMeters(9), 0, new Rotation2d(0)),
