@@ -72,15 +72,16 @@ public final class Constants {
     public static final int kSmallShooterId = 13;
     public static final int kBigShotterId = 14;
     public static final int kBigShotterFollowerId = 15;
-
+    public static final double kPSmallShooter = 0.01125;
+    public static final double kFSmallShooter = 0.0465;
+    public static final double kDSmallShooter = 0.0001125;
+    public static final double kPBigShotter = 0.09;
+    public static final double kFBigShotter = 0.0465;
+    public static final double kDBigShotter = 0.0009;
   }
 
   public static final class Conveyor{
     public static final int kConveyorId = 16;
-
-
-
-
   }
 
   public static final class AutoConstants {
