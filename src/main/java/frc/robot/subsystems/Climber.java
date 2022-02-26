@@ -36,8 +36,8 @@ public class Climber extends SubsystemBase {
   }
 
   public void reverseMovement() {
-    m_LeftClimberMotor.set(TalonFXControlMode.PercentOutput, -.5);
-    m_RightClimberMotor.set(TalonFXControlMode.PercentOutput, -.5);
+    m_LeftClimberMotor.set(TalonFXControlMode.PercentOutput, -.2);
+    m_RightClimberMotor.set(TalonFXControlMode.PercentOutput, -.2);
   }
 
   public void stopMovement(){

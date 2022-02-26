@@ -24,7 +24,12 @@ public class ClimberUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+  if (m_Climber.getPosition() < Constants.ClimberConstants.kTopClimberMotorPosition){
     m_Climber.normalMovement();
+  }
+  else {
+    m_Climber.stopMovement();
+  }
   }
   // Called once the command ends or is interrupted.
   @Override
