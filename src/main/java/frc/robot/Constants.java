@@ -57,8 +57,8 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final int kLeftClimberMotorId = 5;
     public static final int kRightClimberMotorId = 6;
-    public static final int kTopClimberMotorPosition = 442368;
-    public static final int kBottomClimberMotorPosition = 800000;
+    public static final int kTopClimberMotorPosition = 120000;
+    public static final int kBottomClimberMotorPosition = 360000;
   }
 
   public static final class IntakeConstants{
@@ -72,15 +72,16 @@ public final class Constants {
     public static final int kSmallShooterId = 13;
     public static final int kBigShotterId = 14;
     public static final int kBigShotterFollowerId = 15;
-
+    public static final double kPSmallShooter = 0.02;
+    public static final double kFSmallShooter = 0.0448;
+    public static final double kDSmallShooter = 0.0003;
+    public static final double kPBigShotter = 0.09;
+    public static final double kFBigShotter = 0.0448;
+    public static final double kDBigShotter = 0.0009;
   }
 
   public static final class Conveyor{
     public static final int kConveyorId = 16;
-
-
-
-
   }
 
   public static final class AutoConstants {

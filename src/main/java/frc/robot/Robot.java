@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,11 +32,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
-    SmartDashboard.putNumber("Big Roller High Goal", 0.7);
-    SmartDashboard.putNumber("Small Roller High Goal", 0.7);
-    SmartDashboard.putNumber("Big Roller Low Goal", -0.7);
-    SmartDashboard.putNumber("Small Roller High Goal", -0.7);
     Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
     phCompressor.enableDigital();
   }

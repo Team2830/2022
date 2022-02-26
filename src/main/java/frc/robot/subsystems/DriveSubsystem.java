@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -62,6 +63,12 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
     m_RightFollowerMotor.configFactoryDefault();
     m_LeftMotor.configFactoryDefault();
     m_LeftFollowerMotor.configFactoryDefault();
+    
+    m_LeftMotor.configOpenloopRamp(1);
+    m_RightMotor.configOpenloopRamp(1);
+  
+    m_LeftMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
+    m_RightMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
     
     m_LeftFollowerMotor.follow(m_LeftMotor);
     m_RightFollowerMotor.follow(m_RightMotor);
