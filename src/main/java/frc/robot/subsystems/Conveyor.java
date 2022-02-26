@@ -8,11 +8,14 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Conveyor extends SubsystemBase {
   private final WPI_TalonFX m_ConveryorRoller = new WPI_TalonFX(Constants.Conveyor.kConveyorId);
+  private final DigitalInput m_TopPhotoEye = new DigitalInput(Constants.Conveyor.kTopPhotoEye);
+  private final DigitalInput m_BottomPhotoEye = new DigitalInput(Constants.Conveyor.kBottomPhotoEye);
   /** Creates a new Conveyor. */
   public Conveyor() {
     m_ConveryorRoller.configFactoryDefault();
@@ -31,6 +34,13 @@ public class Conveyor extends SubsystemBase {
   }
   public void ConveyorStop(){
     m_ConveryorRoller.set(TalonFXControlMode.PercentOutput, 0);
-
   }
+
+  public boolean getTopPhotoEye() {
+    return m_TopPhotoEye.get();
+  }
+  public boolean getBottomPhotoEye() {
+    return m_BottomPhotoEye.get();
+  }
+  
 }

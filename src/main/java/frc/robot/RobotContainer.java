@@ -23,8 +23,6 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ClimberReset;
 import frc.robot.commands.ClimberUp;
-import frc.robot.commands.ConveyorDown;
-import frc.robot.commands.ConveyorUp;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.IntakeStorage;
@@ -99,13 +97,13 @@ public class RobotContainer {
         .whileHeld(new ClimberReset(m_Climber));
 
     new JoystickButton(m_operatorController, XboxController.Button.kX.value)
-        .whenPressed(new IntakeDown(m_Intake));
+        .whenPressed(new IntakeDown(m_Intake, m_Conveyor));
 
     new JoystickButton(m_operatorController, XboxController.Button.kY.value)
-        .whenPressed(new IntakeStorage(m_Intake));
+        .whenPressed(new IntakeStorage(m_Intake, m_Conveyor));
     
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
-        .whileHeld(new IntakeReverse(m_Intake));
+        .whileHeld(new IntakeReverse(m_Intake, m_Conveyor));
 
     new JoystickButton(m_operatorController, XboxController.Button.kLeftBumper.value)
         .whenPressed(new ShooterMax(m_Shooter));
@@ -115,12 +113,6 @@ public class RobotContainer {
     
     new JoystickButton(m_operatorController, XboxController.Button.kStart.value)
         .whenPressed(new ShooterStop(m_Shooter));
-    
-    new JoystickButton(m_operatorController, XboxController.Button.kLeftStick.value)
-        .whileHeld(new ConveyorUp(m_Conveyor));
-    
-    new JoystickButton(m_operatorController, XboxController.Button.kRightStick.value)
-        .whileHeld(new ConveyorDown(m_Conveyor));
 
 
     }
