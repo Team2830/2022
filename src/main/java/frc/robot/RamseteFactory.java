@@ -41,8 +41,8 @@ public class RamseteFactory {
                   DriveConstants.kaVoltSecondsSquaredPerMeter),
             DriveConstants.kDriveKinematics, 
             robotDrive::getWheelSpeeds, 
-            new PIDController(DriveConstants.kPDriveVel, 0, 0), 
-            new PIDController(DriveConstants.kPDriveVel, 0, 0), 
+            new PIDController(/*DriveConstants.kPDriveVel*/0, 0, 0), 
+            new PIDController(/*DriveConstants.kPDriveVel*/0, 0, 0), 
             robotDrive::tankDriveVolts, 
             robotDrive);
     }

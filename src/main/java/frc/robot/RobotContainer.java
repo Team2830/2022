@@ -6,6 +6,7 @@ package frc.robot;
 
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberDown;
@@ -14,6 +15,7 @@ import frc.robot.commands.ClimberReset;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.ConveyorDown;
 import frc.robot.commands.ConveyorUp;
+import frc.robot.commands.DriveForwardTest;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.IntakeStorage;
@@ -42,6 +44,7 @@ public class RobotContainer {
   private final Intake m_Intake = new Intake();
   private final Shooter m_Shooter = new Shooter();
   private final Conveyor m_Conveyor = new Conveyor();
+  private final SlewRateLimiter m_SlewRateLimiter = new SlewRateLimiter(1.25);
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -61,7 +64,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_robotDrive.arcadeDrive(
-                    -m_driverController.getLeftY(), m_driverController.getRightX()),
+                    m_SlewRateLimiter.calculate(-m_driverController.getLeftY()), m_driverController.getRightX()),
             m_robotDrive));
   }
 
@@ -120,6 +123,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new ExampleAutonomous();
+    return new DriveForwardTest();
   }
 }

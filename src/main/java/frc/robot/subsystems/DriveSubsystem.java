@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,6 +16,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -33,25 +35,9 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
   @Log.DifferentialDrive
   private final DifferentialDrive m_drive = new DifferentialDrive(m_LeftMotor, m_RightMotor);
 
-  // The left-side drive encoder
-  @Log.Encoder
-  private final Encoder m_leftEncoder =
-      new Encoder(
-          DriveConstants.kLeftEncoderPorts[0],
-          DriveConstants.kLeftEncoderPorts[1],
-          DriveConstants.kLeftEncoderReversed);
-
-  // The right-side drive encoder
-  @Log.Encoder()
-  private final Encoder m_rightEncoder =
-      new Encoder(
-          DriveConstants.kRightEncoderPorts[0],
-          DriveConstants.kRightEncoderPorts[1],
-          DriveConstants.kRightEncoderReversed);
-
   // The gyro sensor
   @Log.Gyro
-  //private final Gyro m_gyro = new ADXRS450_Gyro();
+  private final Gyro m_gyro = new AHRS();
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
@@ -64,9 +50,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
     m_LeftMotor.configFactoryDefault();
     m_LeftFollowerMotor.configFactoryDefault();
     
-    m_LeftMotor.configOpenloopRamp(1);
-    m_RightMotor.configOpenloopRamp(1);
-  
+
     m_LeftMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
     m_RightMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
     
@@ -78,19 +62,19 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
     m_LeftMotor.setInverted(TalonFXInvertType.CounterClockwise);
     m_LeftFollowerMotor.setInverted(TalonFXInvertType.FollowMaster);
 
-    // Sets the distance per pulse for the encoders
-    m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-    m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-
     resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(/*m_gyro.getRotation2d()*/new Rotation2d(0));
+    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }
 
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    //m_odometry.update(
-    //    m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+    m_odometry.update(
+        m_gyro.getRotation2d(), 
+        m_LeftMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse, 
+        m_RightMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
+        System.out.println("Left: " + m_LeftMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
+        System.out.println("Right: " + m_RightMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
   }
 
   /**
@@ -108,7 +92,8 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(m_LeftMotor.getSelectedSensorVelocity() * 10 * Constants.DriveConstants.kEncoderDistancePerPulse,
+     m_RightMotor.getSelectedSensorVelocity() * 10 * Constants.DriveConstants.kEncoderDistancePerPulse);
   }
 
   /**
@@ -118,7 +103,9 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    */
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    //m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    m_gyro.reset();
+    System.out.println("Gyro Reset!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
   /**
@@ -145,8 +132,8 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    m_LeftMotor.setSelectedSensorPosition(0);
+    m_RightMotor.setSelectedSensorPosition(0);
   }
 
   /**
@@ -155,25 +142,8 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
-  }
-
-  /**
-   * Gets the left drive encoder.
-   *
-   * @return the left drive encoder
-   */
-  public Encoder getLeftEncoder() {
-    return m_leftEncoder;
-  }
-
-  /**
-   * Gets the right drive encoder.
-   *
-   * @return the right drive encoder
-   */
-  public Encoder getRightEncoder() {
-    return m_rightEncoder;
+    return (m_LeftMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse +
+     m_RightMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse) / 2.0;
   }
 
   /**
@@ -187,7 +157,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    //m_gyro.reset();
+    m_gyro.reset();
   }
 
   /**
@@ -196,7 +166,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return 0;//m_gyro.getRotation2d().getDegrees();
+    return m_gyro.getRotation2d().getDegrees();
   }
 
   /**
@@ -205,6 +175,6 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return 0;//-m_gyro.getRate();
+    return m_gyro.getRate();
   }
 }
