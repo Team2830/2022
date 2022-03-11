@@ -166,7 +166,7 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return m_gyro.getRotation2d().getDegrees();
+    return -m_gyro.getRotation2d().getDegrees();
   }
 
   /**
@@ -175,6 +175,6 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return m_gyro.getRate();
+    return -m_gyro.getRate();
   }
 }

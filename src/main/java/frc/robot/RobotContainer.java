@@ -15,7 +15,8 @@ import frc.robot.commands.ClimberReset;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.ConveyorDown;
 import frc.robot.commands.ConveyorUp;
-import frc.robot.commands.DriveForwardTest;
+import frc.robot.commands.ThreeBall;
+import frc.robot.commands.TwoBall;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.IntakeStorage;
@@ -46,6 +47,9 @@ public class RobotContainer {
   private final Conveyor m_Conveyor = new Conveyor();
   private final SlewRateLimiter m_SlewRateLimiter = new SlewRateLimiter(1.25);
 
+  private static RobotContainer instance;
+
+
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_operatorController = new XboxController(OIConstants.kOperatorControllerPort);
@@ -55,6 +59,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     RamseteFactory.setRobotDrive(m_robotDrive);
+
+    instance = this;
 
     // Configure default commands
     // Set the default drive command to split-stick arcade drive
@@ -66,6 +72,19 @@ public class RobotContainer {
                 m_robotDrive.arcadeDrive(
                     m_SlewRateLimiter.calculate(-m_driverController.getLeftY()), m_driverController.getRightX()),
             m_robotDrive));
+  }
+
+  public static RobotContainer getInstance() {
+      return instance;
+  }
+  public Intake getIntake() {
+      return m_Intake;
+  }
+  public Conveyor getConveyor() {
+    return m_Conveyor;
+  }
+  public Shooter getShooter() {
+      return m_Shooter;
   }
 
   /**
@@ -123,6 +142,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new DriveForwardTest();
+    return new ThreeBall();
   }
 }
