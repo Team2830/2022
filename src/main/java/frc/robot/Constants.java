@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -21,32 +22,26 @@ public final class Constants {
     public static final int kRightMotor1Port = 3;
     public static final int kRightMotor2Port = 4;
 
-    public static final int[] kLeftEncoderPorts = new int[] {0, 1};
-    public static final int[] kRightEncoderPorts = new int[] {2, 3};
-    public static final boolean kLeftEncoderReversed = false;
-    public static final boolean kRightEncoderReversed = true;
-
-    public static final double kTrackwidthMeters = 0.69;
+    public static final double kTrackwidthMeters = 0.69459;
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
 
-    public static final int kEncoderCPR = 1024;
-    public static final double kWheelDiameterMeters = 0.15;
+    public static final int kEncoderCPR = 2048;
+    public static final double kWheelDiameterMeters = Units.inchesToMeters(6);
     public static final double kEncoderDistancePerPulse =
-        // Assumes the encoders are directly mounted on the wheel shafts
-        (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
+        ((kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR) / 10.71;
 
     // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
     // These characterization values MUST be determined either experimentally or theoretically
     // for *your* robot's drive.
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
-    public static final double ksVolts = 0.22;
-    public static final double kvVoltSecondsPerMeter = 1.98;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.2;
+    public static final double ksVolts = 0.71886;
+    public static final double kvVoltSecondsPerMeter = 2.2607;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.3051;
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 8.5;
+    public static final double kPDriveVel = 2.4538;
   }
 
   public static final class OIConstants {
@@ -57,8 +52,8 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final int kLeftClimberMotorId = 5;
     public static final int kRightClimberMotorId = 6;
-    public static final int kTopClimberMotorPosition = 442368;
-    public static final int kBottomClimberMotorPosition = 800000;
+    public static final int kTopClimberMotorPosition = 180000;
+    public static final int kBottomClimberMotorPosition = 360000;
   }
 
   public static final class IntakeConstants{
@@ -72,11 +67,11 @@ public final class Constants {
     public static final int kSmallShooterId = 13;
     public static final int kBigShotterId = 14;
     public static final int kBigShotterFollowerId = 15;
-    public static final double kPSmallShooter = 0.01125;
-    public static final double kFSmallShooter = 0.0465;
-    public static final double kDSmallShooter = 0.0001125;
+    public static final double kPSmallShooter = 0.02;
+    public static final double kFSmallShooter = 0.0448;
+    public static final double kDSmallShooter = 0.0003;
     public static final double kPBigShotter = 0.09;
-    public static final double kFBigShotter = 0.0465;
+    public static final double kFBigShotter = 0.0448;
     public static final double kDBigShotter = 0.0009;
   }
 
@@ -87,7 +82,7 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxSpeedMetersPerSecond = 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
