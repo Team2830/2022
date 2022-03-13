@@ -69,7 +69,7 @@ public class RobotContainer {
         // hand, and turning controlled by the right.
         new RunCommand(
             () ->
-                m_robotDrive.arcadeDrive(
+                m_robotDrive.closedLoopDrive(
                     m_SlewRateLimiter.calculate(-m_driverController.getLeftY() * Constants.DriveConstants.kMaxSpeed), m_driverController.getRightX() * Constants.DriveConstants.kMaxAngularSpeed),
             m_robotDrive));
   }

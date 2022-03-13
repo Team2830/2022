@@ -13,6 +13,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -36,6 +38,8 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
 
   private final PIDController m_leftPIDController = new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0);
   private final PIDController m_rightPIDController = new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0);
+
+  private final DifferentialDriveKinematics m_Kinematics = new DifferentialDriveKinematics(Constants.DriveConstants.kTrackwidthMeters);
 
   // The robot's drive
   @Log.DifferentialDrive
@@ -97,6 +101,11 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
     final double rightOutput =
         m_rightPIDController.calculate(getWheelSpeeds().rightMetersPerSecond, speeds.rightMetersPerSecond);
     tankDriveVolts(leftOutput + leftFeedforward, rightOutput + rightFeedforward);
+  }
+
+  public void closedLoopDrive(double xSpeed, double rot) {
+    var wheelSpeeds = m_Kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0, rot));
+    setSpeeds(wheelSpeeds);
   }
 
 
