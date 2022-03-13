@@ -42,6 +42,9 @@ public final class Constants {
 
     // Example value only - as above, this must be tuned for your drive!
     public static final double kPDriveVel = 2.4538;
+
+    public static final double kMaxSpeed = 4.0;
+    public static final double kMaxAngularSpeed = 2 * Math.PI;
   }
 
   public static final class OIConstants {

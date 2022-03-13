@@ -9,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -30,6 +32,10 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
   private final WPI_TalonFX m_RightMotor = new WPI_TalonFX(DriveConstants.kRightMotor1Port);
   private final WPI_TalonFX m_RightFollowerMotor = new WPI_TalonFX(DriveConstants.kRightMotor2Port);
 
+  private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.DriveConstants.ksVolts, Constants.DriveConstants.kvVoltSecondsPerMeter);
+
+  private final PIDController m_leftPIDController = new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0);
+  private final PIDController m_rightPIDController = new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0);
 
   // The robot's drive
   @Log.DifferentialDrive
@@ -76,6 +82,23 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
         System.out.println("Left: " + m_LeftMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
         System.out.println("Right: " + m_RightMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
   }
+
+  /**
+   * Sets the desired wheel speeds.
+   *
+   * @param speeds The desired wheel speeds.
+   */
+  public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
+    final double leftFeedforward = m_feedforward.calculate(speeds.leftMetersPerSecond);
+    final double rightFeedforward = m_feedforward.calculate(speeds.rightMetersPerSecond);
+
+    final double leftOutput =
+        m_leftPIDController.calculate(getWheelSpeeds().leftMetersPerSecond, speeds.leftMetersPerSecond);
+    final double rightOutput =
+        m_rightPIDController.calculate(getWheelSpeeds().rightMetersPerSecond, speeds.rightMetersPerSecond);
+    tankDriveVolts(leftOutput + leftFeedforward, rightOutput + rightFeedforward);
+  }
+
 
   /**
    * Returns the currently-estimated pose of the robot.

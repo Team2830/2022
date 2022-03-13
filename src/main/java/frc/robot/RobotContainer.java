@@ -70,7 +70,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_robotDrive.arcadeDrive(
-                    m_SlewRateLimiter.calculate(-m_driverController.getLeftY()), m_driverController.getRightX()),
+                    m_SlewRateLimiter.calculate(-m_driverController.getLeftY() * Constants.DriveConstants.kMaxSpeed), m_driverController.getRightX() * Constants.DriveConstants.kMaxAngularSpeed),
             m_robotDrive));
   }
 
