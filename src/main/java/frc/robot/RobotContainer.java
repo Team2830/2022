@@ -70,7 +70,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_robotDrive.closedLoopDrive(
-                    m_SlewRateLimiter.calculate(-m_driverController.getLeftY() * Constants.DriveConstants.kMaxSpeed), m_driverController.getRightX() * Constants.DriveConstants.kMaxAngularSpeed),
+                    m_SlewRateLimiter.calculate((m_driverController.getRightTriggerAxis() - m_driverController.getLeftTriggerAxis()) * Constants.DriveConstants.kMaxSpeed), m_driverController.getRightX() * Constants.DriveConstants.kMaxAngularSpeed),
             m_robotDrive));
   }
 
