@@ -83,8 +83,8 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
         m_gyro.getRotation2d(), 
         m_LeftMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse, 
         m_RightMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
-        System.out.println("Left: " + m_LeftMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
-        System.out.println("Right: " + m_RightMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
+        //System.out.println("Left: " + m_LeftMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
+        //System.out.println("Right: " + m_RightMotor.getSelectedSensorPosition() * Constants.DriveConstants.kEncoderDistancePerPulse);
   }
 
   /**

@@ -42,7 +42,7 @@ public class TwoBall extends SequentialCommandGroup {
               new Pose2d(Units.inchesToMeters(45), Units.inchesToMeters(0), new Rotation2d())),
               RamseteFactory.getTrajectoryConfig())
         ),
-        new IntakeDown(RobotContainer.getInstance().getIntake())
+        new IntakeDown(RobotContainer.getInstance().getIntake(),RobotContainer.getInstance().getConveyor())
 
       ),
       new ParallelDeadlineGroup(
@@ -53,11 +53,11 @@ public class TwoBall extends SequentialCommandGroup {
               new Pose2d(Units.inchesToMeters(-53), Units.inchesToMeters(-17.5), Rotation2d.fromDegrees(24))),
               RamseteFactory.getTrajectoryConfig().setReversed(true))
         ),
-        new IntakeStorage(RobotContainer.getInstance().getIntake())
+        new IntakeStorage(RobotContainer.getInstance().getIntake(),RobotContainer.getInstance().getConveyor())
       ),
       new ParallelDeadlineGroup(
       new WaitCommand(1),
-      new ConveyorUp(RobotContainer.getInstance().getConveyor())
+      new Shoot(RobotContainer.getInstance().getConveyor(),RobotContainer.getInstance().getIntake())
       ),
       
       new PrintCommand("EO is Cool")

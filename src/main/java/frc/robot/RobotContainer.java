@@ -7,19 +7,29 @@ package frc.robot;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ExampleAutonomous;
 import frc.robot.commands.ClimberReset;
 import frc.robot.commands.ClimberUp;
-import frc.robot.commands.ConveyorDown;
-import frc.robot.commands.ConveyorUp;
 import frc.robot.commands.ThreeBall;
 import frc.robot.commands.TwoBall;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.IntakeStorage;
+import frc.robot.commands.OneBallFender;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterMax;
 import frc.robot.commands.ShooterSlow;
 import frc.robot.commands.ShooterStop;
@@ -95,9 +105,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Drive at half speed when the right bumper is held
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
-        .whenReleased(() -> m_robotDrive.setMaxOutput(1));
+    //new JoystickButton(m_driverController, Button.kRightBumper.value)
+    //    .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
+    //    .whenReleased(() -> m_robotDrive.setMaxOutput(1));
 
     new JoystickButton(m_operatorController, XboxController.Button.kB.value)
         .whileHeld(new ClimberDown(m_Climber));
@@ -109,13 +119,13 @@ public class RobotContainer {
         .whileHeld(new ClimberReset(m_Climber));
 
     new JoystickButton(m_operatorController, XboxController.Button.kX.value)
-        .whenPressed(new IntakeDown(m_Intake));
+        .whenPressed(new IntakeDown(m_Intake, m_Conveyor));
 
     new JoystickButton(m_operatorController, XboxController.Button.kY.value)
-        .whenPressed(new IntakeStorage(m_Intake));
+        .whenPressed(new IntakeStorage(m_Intake, m_Conveyor));
     
     new JoystickButton(m_driverController, XboxController.Button.kBack.value)
-        .whileHeld(new IntakeReverse(m_Intake));
+        .whileHeld(new IntakeReverse(m_Intake, m_Conveyor));
 
     new JoystickButton(m_operatorController, XboxController.Button.kLeftBumper.value)
         .whenPressed(new ShooterMax(m_Shooter));
@@ -125,12 +135,8 @@ public class RobotContainer {
     
     new JoystickButton(m_operatorController, XboxController.Button.kStart.value)
         .whenPressed(new ShooterStop(m_Shooter));
-    
-    new JoystickButton(m_operatorController, XboxController.Button.kLeftStick.value)
-        .whileHeld(new ConveyorUp(m_Conveyor));
-    
-    new JoystickButton(m_operatorController, XboxController.Button.kRightStick.value)
-        .whileHeld(new ConveyorDown(m_Conveyor));
+    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+        .whenHeld(new Shoot(m_Conveyor, m_Intake));
 
 
     }

@@ -5,15 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Intake;
 
 public class IntakeStorage extends CommandBase {
   private Intake m_Intake;
+  private Conveyor m_Conveyor;
   /** Creates a new IntakeStorage. */
-  public IntakeStorage(Intake intake) {
+  public IntakeStorage(Intake intake, Conveyor conveyor) {
     m_Intake = intake;
+    m_Conveyor = conveyor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_Intake);
+    addRequirements(m_Intake,m_Conveyor);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +28,7 @@ public class IntakeStorage extends CommandBase {
   public void execute() {
     m_Intake.intakeStop();
     m_Intake.intakeUp();
-
+    m_Conveyor.ConveyorStop();
   }
 
   // Called once the command ends or is interrupted.

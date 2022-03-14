@@ -8,13 +8,28 @@ Climber
 		When button A on the operator joystick is HELD, move the climber up until it hits its top position
 	Reset:
 		When back button on the operator joystick is HELD, move the climber in reverse to reset it
-Intake
+Intake Path to Shooter
 	Down intake:
-		When Button X on operator joystick is PRESSED, move piston intake down then turn on rolllers on intake
+		When Button X on operator joystick is PRESSED, move piston intake down
+		if top photoEye is off/bottem photoEye is off- Conveyor roller is on, intake roller on
+		if top photoEye is off/bottem photoEye is on- Conveyor roller is on, intake roller on
+		if top photoEye is on/bottem photoEye is off- Conveyor roller is off, intake roller on
+		if top photoEye is on/bottem photoEye is on- Conveyor roller is off, intake roller off
+
 	STORAGE up:
-		When button Y on operator joystick is PRESSED, move piston Intake Up then turn off Rollers on intake
+		When button Y on operator joystick is PRESSED, move piston Intake Up 
+		if top photoEye is off/bottem photoEye is off- Conveyor roller is on, intake roller on
+		if top photoEye is off/bottem photoEye is on- Conveyor roller is on, intake roller on
+		if top photoEye is on/bottem photoEye is off- Conveyor roller is off, intake roller on
+		if top photoEye is on/bottem photoEye is on- Conveyor roller is off, intake roller off
+	
 	Intake Roller Reverse:
 		When button  Start on operator joystick is HELD, Rollers turned on in reverse mode
+		
+
+	Conveyor Roller Shooter:
+		When button ________ on operator joystick is pressed, if photoeye detect object and Conveyor rolllers turn on going up.
+
 Shooter
 	Shooter fast:
 		When Left Joystick Button is PRESSED, Rollers turn at max speed
@@ -25,6 +40,7 @@ Conveyor
 		When button LB on operator joystick is Held, Rollers turned on going up
 	Conveyor Roller down:
 		When button RB on operator joystick is Held, Rollers turned on reversed going down
+
 
 HELD: The operation only takes place when the button is held and stops when it is released
 PRESSED: The button start when the button is pressed and continues until stopped by another event

@@ -6,14 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.Intake;
 
-public class ConveyorDown extends CommandBase {
-  private Conveyor m_conveyor;
-  /** Creates a new ConveyorDown. */
-  public ConveyorDown(Conveyor conveyor) {
-    m_conveyor = conveyor;
+public class Shoot extends CommandBase {
+  private Conveyor m_Conveyor;
+  private Intake m_Intake;
+  /** Creates a new Shoot. */
+  public Shoot(Conveyor conveyor, Intake intake) {
+    m_Conveyor = conveyor;
+    m_Intake = intake; 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_conveyor);
+    addRequirements(m_Conveyor, m_Intake);
+  
   }
 
   // Called when the command is initially scheduled.
@@ -23,13 +27,15 @@ public class ConveyorDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_conveyor.Conveyordown();
+    m_Conveyor.ConveyorUp();
+    m_Intake.intakeIn();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_conveyor.ConveyorStop();
+    m_Conveyor.ConveyorStop();
+    m_Intake.intakeOut();
   }
 
   // Returns true when the command should end.
