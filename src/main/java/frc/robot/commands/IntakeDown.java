@@ -29,19 +29,19 @@ public class IntakeDown extends CommandBase {
   public void execute() {
     m_Intake.intakedown();
 
-    if ( ! m_Conveyor.getTopPhotoEye() && ! m_Conveyor.getBottomPhotoEye()){
+    if ( ! m_Conveyor.getTopPhotoEye() & ! m_Conveyor.getBottomPhotoEye()){
       m_Intake.intakeIn();
       m_Conveyor.ConveyorUp();
     }
-    if ( ! m_Conveyor.getTopPhotoEye() &&  m_Conveyor.getBottomPhotoEye()){
+    if ( ! m_Conveyor.getTopPhotoEye() &  m_Conveyor.getBottomPhotoEye()){
       m_Intake.intakeIn();
       m_Conveyor.ConveyorUp();
     }
-    if (m_Conveyor.getTopPhotoEye() && ! m_Conveyor.getBottomPhotoEye()){
+    if (m_Conveyor.getTopPhotoEye() & ! m_Conveyor.getBottomPhotoEye()){
       m_Intake.intakeIn();
       m_Conveyor.ConveyorStop();
     }
-    if (m_Conveyor.getTopPhotoEye() && m_Conveyor.getBottomPhotoEye()){
+    if (m_Conveyor.getTopPhotoEye() & m_Conveyor.getBottomPhotoEye()){
       m_Intake.intakeStop();
       m_Conveyor.ConveyorStop();
     }

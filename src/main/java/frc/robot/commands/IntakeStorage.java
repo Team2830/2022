@@ -26,26 +26,9 @@ public class IntakeStorage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_Intake.intakeStop();
     m_Intake.intakeUp();
-
-    if ( ! m_Conveyor.getTopPhotoEye() && ! m_Conveyor.getBottomPhotoEye()){
-      m_Intake.intakeIn();
-      m_Conveyor.ConveyorUp();
-    }
-    if ( ! m_Conveyor.getTopPhotoEye() &&  m_Conveyor.getBottomPhotoEye()){
-      m_Intake.intakeIn();
-      m_Conveyor.ConveyorUp();
-    }
-    if (m_Conveyor.getTopPhotoEye() && ! m_Conveyor.getBottomPhotoEye()){
-      m_Intake.intakeIn();
-      m_Conveyor.ConveyorStop();
-    }
-    if (m_Conveyor.getTopPhotoEye() && m_Conveyor.getBottomPhotoEye()){
-      m_Intake.intakeStop();
-      m_Conveyor.ConveyorStop();
-    }
-
-
+    m_Conveyor.ConveyorStop();
   }
 
   // Called once the command ends or is interrupted.

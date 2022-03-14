@@ -28,6 +28,8 @@ import frc.robot.commands.TwoBall;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.IntakeStorage;
+import frc.robot.commands.OneBallFender;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterMax;
 import frc.robot.commands.ShooterSlow;
 import frc.robot.commands.ShooterStop;
@@ -78,7 +80,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_robotDrive.arcadeDrive(
-                    m_SlewRateLimiter.calculate(-m_driverController.getLeftY()), m_driverController.getRightX()),
+                    m_SlewRateLimiter.calculate(m_driverController.getRightTriggerAxis()-m_driverController.getLeftTriggerAxis()), m_driverController.getRightX()),
             m_robotDrive));
   }
 
@@ -103,9 +105,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Drive at half speed when the right bumper is held
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
-        .whenReleased(() -> m_robotDrive.setMaxOutput(1));
+    //new JoystickButton(m_driverController, Button.kRightBumper.value)
+    //    .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
+    //    .whenReleased(() -> m_robotDrive.setMaxOutput(1));
 
     new JoystickButton(m_operatorController, XboxController.Button.kB.value)
         .whileHeld(new ClimberDown(m_Climber));
@@ -133,6 +135,8 @@ public class RobotContainer {
     
     new JoystickButton(m_operatorController, XboxController.Button.kStart.value)
         .whenPressed(new ShooterStop(m_Shooter));
+    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+        .whenHeld(new Shoot(m_Conveyor, m_Intake));
 
 
     }

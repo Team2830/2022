@@ -41,8 +41,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shooterMax(){
-    m_SmallRoller.set(TalonFXControlMode.Velocity, SmartDashboard.getNumber("Small Roller High Goal", 7500));
-    m_BigRoller.set(TalonFXControlMode.Velocity, SmartDashboard.getNumber("Big Roller High Goal", 7500));
+    m_SmallRoller.set(TalonFXControlMode.Velocity, SmartDashboard.getNumber("Small Roller High Goal", 8500));
+    m_BigRoller.set(TalonFXControlMode.Velocity, SmartDashboard.getNumber("Big Roller High Goal", 8500));
   }
 
   public void shooterSlow(){

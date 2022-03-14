@@ -27,8 +27,8 @@ import frc.robot.subsystems.Shooter;
 public class ThreeBall extends SequentialCommandGroup {
   /** Creates a new DriveForwardTest. */
   public ThreeBall() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+     ///Add your commands in the addCommands() call, e.g.
+    /// addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ResetOdometry(), 
       new ParallelDeadlineGroup(
@@ -42,7 +42,7 @@ public class ThreeBall extends SequentialCommandGroup {
               new Pose2d(Units.inchesToMeters(42), Units.inchesToMeters(0), new Rotation2d())),
               RamseteFactory.getTrajectoryConfig())
         ),
-        new IntakeDown(RobotContainer.getInstance().getIntake())
+        new IntakeDown(RobotContainer.getInstance().getIntake(),RobotContainer.getInstance().getConveyor())
 
       ),
       new ParallelDeadlineGroup(
@@ -50,37 +50,40 @@ public class ThreeBall extends SequentialCommandGroup {
           TrajectoryGenerator.generateTrajectory(
             List.of(
               new Pose2d(Units.inchesToMeters(42), Units.inchesToMeters(0), new Rotation2d()),
-              new Pose2d(Units.inchesToMeters(-54), Units.inchesToMeters(18), Rotation2d.fromDegrees(-24))),
+              new Pose2d(Units.inchesToMeters(-59), Units.inchesToMeters(18), Rotation2d.fromDegrees(-24))),
               RamseteFactory.getTrajectoryConfig().setReversed(true))
         )),
 
         new ParallelDeadlineGroup(
-          new WaitCommand(1),
-          new ConveyorUp(RobotContainer.getInstance().getConveyor())
+          new WaitCommand(2),
+          new Shoot(RobotContainer.getInstance().getConveyor(),RobotContainer.getInstance().getIntake())
           ),
       new ParallelDeadlineGroup(
         RamseteFactory.createRamseteCommand(
           TrajectoryGenerator.generateTrajectory(
             List.of(
-              new Pose2d(Units.inchesToMeters(-54), Units.inchesToMeters(18), Rotation2d.fromDegrees(-24)),
+              new Pose2d(Units.inchesToMeters(-59), Units.inchesToMeters(18), Rotation2d.fromDegrees(-24)),
               new Pose2d(Units.inchesToMeters(-11), Units.inchesToMeters(-100), Rotation2d.fromDegrees(-90))),
               RamseteFactory.getTrajectoryConfig())
         ),
-        new IntakeDown(RobotContainer.getInstance().getIntake())
+        new IntakeDown(RobotContainer.getInstance().getIntake(),RobotContainer.getInstance().getConveyor())
       ),
       new ParallelDeadlineGroup(
         RamseteFactory.createRamseteCommand(
           TrajectoryGenerator.generateTrajectory(
             List.of(
               new Pose2d(Units.inchesToMeters(-11), Units.inchesToMeters(-100), Rotation2d.fromDegrees(-90)),
-              new Pose2d(Units.inchesToMeters(-59), Units.inchesToMeters(12), Rotation2d.fromDegrees(-24))),
+              new Pose2d(Units.inchesToMeters(-59), Units.inchesToMeters(6), Rotation2d.fromDegrees(-24))),
               RamseteFactory.getTrajectoryConfig().setReversed(true))
         ),
-        new IntakeDown(RobotContainer.getInstance().getIntake())
-      ),
+        new IntakeDown(RobotContainer.getInstance().getIntake(),RobotContainer.getInstance().getConveyor())
+        ),
+        new ParallelDeadlineGroup(
+          new WaitCommand(2),
+          new Shoot(RobotContainer.getInstance().getConveyor(),RobotContainer.getInstance().getIntake())
+        ),
 
       
-      new PrintCommand("EO is Cool")
-    );
+      new PrintCommand("EO is Cool"));
   }
 }

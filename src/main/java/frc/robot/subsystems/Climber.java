@@ -18,9 +18,9 @@ public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   public Climber() {
     m_LeftClimberMotor.configFactoryDefault();
-    m_LeftClimberMotor.setInverted(TalonFXInvertType.CounterClockwise);
+    m_LeftClimberMotor.setInverted(TalonFXInvertType.Clockwise);
     m_RightClimberMotor.configFactoryDefault();
-    m_RightClimberMotor.setInverted(TalonFXInvertType.Clockwise);
+    m_RightClimberMotor.setInverted(TalonFXInvertType.CounterClockwise);
   }
 
   @Override

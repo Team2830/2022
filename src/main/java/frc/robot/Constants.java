@@ -77,8 +77,11 @@ public final class Constants {
 
   public static final class Conveyor{
     public static final int kConveyorId = 16;
-    public static final int kTopPhotoEye = 17;
-    public static final int kBottomPhotoEye = 18;
+    public static final int kLeftTopPhotoEye = 1;
+    public static final int kLeftBottomPhotoEye = 0;
+    public static final int kRightTopPhotoEye = 2;
+    public static final int kRightBottemPhotoEye = 3;
+
   }
 
   public static final class AutoConstants {

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RamseteFactory;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -34,7 +35,7 @@ public class OneBallFender extends SequentialCommandGroup {
         new ShooterMax(RobotContainer.getInstance().getShooter())),
       new ParallelDeadlineGroup(
         new WaitCommand(.5),
-        new ConveyorUp(RobotContainer.getInstance().getConveyor())),
+        new Shoot(RobotContainer.getInstance().getConveyor(),RobotContainer.getInstance().getIntake())),
       RamseteFactory.createRamseteCommand(
         TrajectoryGenerator.generateTrajectory(
           List.of(
@@ -43,7 +44,6 @@ public class OneBallFender extends SequentialCommandGroup {
             new Pose2d(Units.inchesToMeters(96), Units.inchesToMeters(86), new Rotation2d(0))),
             RamseteFactory.getTrajectoryConfig())
       ),
-      new PrintCommand("EO is Cool")
-    );
+      new PrintCommand("EO is Cool"));
   }
 }
