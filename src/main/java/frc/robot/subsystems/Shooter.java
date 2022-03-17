@@ -37,7 +37,8 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    SmartDashboard.putNumber("Top Shooter Speed", m_SmallRoller.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Button Shooter Speed", m_BigRoller.getSelectedSensorVelocity());
   }
 
   public void shooterMax(){

@@ -63,7 +63,7 @@ public class ThreeBall extends SequentialCommandGroup {
           TrajectoryGenerator.generateTrajectory(
             List.of(
               new Pose2d(Units.inchesToMeters(-59), Units.inchesToMeters(18), Rotation2d.fromDegrees(-24)),
-              new Pose2d(Units.inchesToMeters(-11), Units.inchesToMeters(-100), Rotation2d.fromDegrees(-90))),
+              new Pose2d(Units.inchesToMeters(-16), Units.inchesToMeters(-100), Rotation2d.fromDegrees(-90))),
               RamseteFactory.getTrajectoryConfig())
         ),
         new IntakeDown(RobotContainer.getInstance().getIntake(),RobotContainer.getInstance().getConveyor())
@@ -72,7 +72,7 @@ public class ThreeBall extends SequentialCommandGroup {
         RamseteFactory.createRamseteCommand(
           TrajectoryGenerator.generateTrajectory(
             List.of(
-              new Pose2d(Units.inchesToMeters(-11), Units.inchesToMeters(-100), Rotation2d.fromDegrees(-90)),
+              new Pose2d(Units.inchesToMeters(-16), Units.inchesToMeters(-100), Rotation2d.fromDegrees(-90)),
               new Pose2d(Units.inchesToMeters(-59), Units.inchesToMeters(6), Rotation2d.fromDegrees(-24))),
               RamseteFactory.getTrajectoryConfig().setReversed(true))
         ),

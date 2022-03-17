@@ -62,8 +62,15 @@ public class DriveSubsystem extends SubsystemBase implements Loggable  {
     
 
     m_LeftMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
+    m_LeftFollowerMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
     m_RightMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
+    m_RightFollowerMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,40,40,0));
     
+    m_LeftMotor.configClosedloopRamp(0.2);
+    m_LeftFollowerMotor.configClosedloopRamp(0.2);
+    m_RightMotor.configClosedloopRamp(0.2);
+    m_RightFollowerMotor.configClosedloopRamp(0.2);
+
     m_LeftFollowerMotor.follow(m_LeftMotor);
     m_RightFollowerMotor.follow(m_RightMotor);
 

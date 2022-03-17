@@ -17,10 +17,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ExampleAutonomous;
@@ -58,16 +55,7 @@ public class RobotContainer {
   private final Intake m_Intake = new Intake();
   private final Shooter m_Shooter = new Shooter();
   private final Conveyor m_Conveyor = new Conveyor();
-  private final SlewRateLimiter m_SlewRateLimiter = new SlewRateLimiter(5);
-
-  private final Command m_OneBall = new OneBallFender();
-  private final Command m_TwoBall = new TwoBall();
-  private final Command m_ThreeBall = new ThreeBall();
-  SendableChooser<Command> m_chooser = new SendableChooser<Command>();
-
-
-
-
+  private final SlewRateLimiter m_SlewRateLimiter = new SlewRateLimiter(1.25);
 
   private static RobotContainer instance;
 
@@ -77,11 +65,7 @@ public class RobotContainer {
   XboxController m_operatorController = new XboxController(OIConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {  
-    m_chooser.setDefaultOption("OneBall", m_OneBall);
-    m_chooser.addOption("TwoBall", m_TwoBall);
-    m_chooser.addOption("ThreeBall", m_ThreeBall);
-    SmartDashboard.putData(m_chooser);  
+  public RobotContainer() {    
     // Configure the button bindings
     configureButtonBindings();
     RamseteFactory.setRobotDrive(m_robotDrive);
@@ -95,8 +79,13 @@ public class RobotContainer {
         // hand, and turning controlled by the right.
         new RunCommand(
             () ->
+<<<<<<< HEAD
                 m_robotDrive.closedLoopDrive(
-                    m_SlewRateLimiter.calculate((m_driverController.getRightTriggerAxis() - m_driverController.getLeftTriggerAxis()) * Constants.DriveConstants.kMaxSpeed), -m_driverController.getRightX() * Constants.DriveConstants.kMaxAngularSpeed),
+                    m_SlewRateLimiter.calculate((m_driverController.getRightTriggerAxis() - m_driverController.getLeftTriggerAxis()) * Constants.DriveConstants.kMaxSpeed), m_driverController.getRightX() * Constants.DriveConstants.kMaxAngularSpeed),
+=======
+                m_robotDrive.arcadeDrive(
+                    m_SlewRateLimiter.calculate(m_driverController.getRightTriggerAxis()-m_driverController.getLeftTriggerAxis()), m_driverController.getRightX()),
+>>>>>>> photoEye
             m_robotDrive));
   }
 
@@ -125,10 +114,10 @@ public class RobotContainer {
     //    .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
     //    .whenReleased(() -> m_robotDrive.setMaxOutput(1));
 
-    new JoystickButton(m_operatorController, XboxController.Button.kA.value)
+    new JoystickButton(m_operatorController, XboxController.Button.kB.value)
         .whileHeld(new ClimberDown(m_Climber));
 
-    new JoystickButton(m_operatorController, XboxController.Button.kB.value)
+    new JoystickButton(m_operatorController, XboxController.Button.kA.value)
         .whileHeld(new ClimberUp(m_Climber));
 
     new JoystickButton(m_operatorController, XboxController.Button.kBack.value)
@@ -152,7 +141,7 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, XboxController.Button.kStart.value)
         .whenPressed(new ShooterStop(m_Shooter));
     new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
-        .whenPressed(new Shoot(m_Conveyor, m_Intake));
+        .whenHeld(new Shoot(m_Conveyor, m_Intake));
 
 
     }
@@ -163,7 +152,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-    public Command getAutonomousCommand() {
-        return m_chooser.getSelected();
-    }
+  public Command getAutonomousCommand() {
+    return new ThreeBall();
+  }
 }
