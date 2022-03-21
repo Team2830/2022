@@ -35,7 +35,7 @@ public class Shoot extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_Conveyor.ConveyorStop();
-    m_Intake.intakeOut();
+    m_Intake.intakeStop();
   }
 
   // Returns true when the command should end.

@@ -26,7 +26,7 @@ import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ExampleAutonomous;
 import frc.robot.commands.ClimberReset;
 import frc.robot.commands.ClimberUp;
-import frc.robot.commands.ThreeBall;
+import frc.robot.commands.FiveBall;
 import frc.robot.commands.TwoBall;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeReverse;
@@ -36,6 +36,7 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterMax;
 import frc.robot.commands.ShooterSlow;
 import frc.robot.commands.ShooterStop;
+import frc.robot.commands.ThreeBall;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveSubsystem;
@@ -60,10 +61,11 @@ public class RobotContainer {
   private final Conveyor m_Conveyor = new Conveyor();
   private final SlewRateLimiter m_SlewRateLimiter = new SlewRateLimiter(5);
 
-  private final Command m_OneBall = new OneBallFender();
-  private final Command m_TwoBall = new TwoBall();
-  private final Command m_ThreeBall = new ThreeBall();
-  SendableChooser<Command> m_chooser = new SendableChooser<Command>();
+  private final Command m_OneBall;
+  private final Command m_TwoBall;
+  private final Command m_ThreeBall;
+  private final Command m_FiveBall;
+  SendableChooser<Command> m_chooser;
 
 
 
@@ -78,15 +80,25 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {  
-    m_chooser.setDefaultOption("OneBall", m_OneBall);
-    m_chooser.addOption("TwoBall", m_TwoBall);
-    m_chooser.addOption("ThreeBall", m_ThreeBall);
-    SmartDashboard.putData(m_chooser);  
     // Configure the button bindings
     configureButtonBindings();
     RamseteFactory.setRobotDrive(m_robotDrive);
 
     instance = this;
+
+    m_OneBall = new OneBallFender();
+    m_TwoBall = new TwoBall();
+    m_ThreeBall = new ThreeBall();
+    m_FiveBall = new FiveBall();
+    m_chooser = new SendableChooser<Command>();
+
+    m_chooser.setDefaultOption("OneBall", m_OneBall);
+    m_chooser.addOption("TwoBall", m_TwoBall);
+    m_chooser.addOption("ThreeBall", m_ThreeBall);
+    m_chooser.addOption("FiveBall", m_FiveBall);
+    SmartDashboard.putData(m_chooser);  
+
+
 
     // Configure default commands
     // Set the default drive command to split-stick arcade drive

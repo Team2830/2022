@@ -80,15 +80,13 @@ public final class Constants {
 
   public static final class Conveyor{
     public static final int kConveyorId = 16;
-    public static final int kLeftTopPhotoEye = 1;
-    public static final int kLeftBottomPhotoEye = 0;
-    public static final int kRightTopPhotoEye = 2;
-    public static final int kRightBottemPhotoEye = 3;
+    public static final int kTopPhotoEye = 1;
+    public static final int kBottomPhotoEye = 0;
 
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 4;
+    public static final double kMaxSpeedMetersPerSecond = 5;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
